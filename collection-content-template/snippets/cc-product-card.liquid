@@ -1,0 +1,73 @@
+{%- comment -%}
+  Collection content product card.
+  Params: product, show_badge, show_quick_add, show_hover_image, lazy
+{%- endcomment -%}
+{%- liquid
+  assign first_media = product.featured_media
+  assign second_media = product.media[1]
+  assign tagline = product.metafields.custom.tagline
+  assign on_sale = false
+  if product.compare_at_price > product.price
+    assign on_sale = true
+    assign savings = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price
+  endif
+  assign loading = 'eager'
+  if lazy
+    assign loading = 'lazy'
+  endif
+-%}
+<div class="cc-card">
+  <a href="{{ product.url }}" class="cc-card__media{% if show_hover_image and second_media %} has-hover{% endif %}" aria-label="{{ product.title | escape }}">
+    {%- if first_media -%}
+      {{ first_media | image_url: width: 900 | image_tag:
+        loading: loading,
+        sizes: '(min-width: 990px) 25vw, 50vw',
+        widths: '300, 450, 600, 900',
+        class: 'cc-card__img',
+        alt: first_media.alt | default: product.title
+      }}
+      {%- if show_hover_image and second_media -%}
+        {{ second_media | image_url: width: 900 | image_tag:
+          loading: 'lazy',
+          sizes: '(min-width: 990px) 25vw, 50vw',
+          widths: '300, 450, 600, 900',
+          class: 'cc-card__img cc-card__img--hover',
+          alt: ''
+        }}
+      {%- endif -%}
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag: 'cc-card__img cc-placeholder' }}
+    {%- endif -%}
+    {%- if show_badge and on_sale -%}
+      <span class="cc-badge">{{ savings }}% off</span>
+    {%- endif -%}
+    {%- unless product.available -%}
+      <span class="cc-badge cc-badge--muted">Sold out</span>
+    {%- endunless -%}
+  </a>
+
+  <div class="cc-card__body">
+    <a href="{{ product.url }}" class="cc-card__title">{{ product.title }}</a>
+    {%- if tagline != blank -%}
+      <p class="cc-card__tagline">{{ tagline }}</p>
+    {%- endif -%}
+    <p class="cc-card__price">
+      {%- if product.price_varies -%}From {% endif -%}
+      <span class="cc-card__price-now">{{ product.price | money }}</span>
+      {%- if on_sale -%}
+        <s class="cc-card__price-was">{{ product.compare_at_price | money }}</s>
+      {%- endif -%}
+    </p>
+
+    {%- if show_quick_add -%}
+      {%- if product.has_only_default_variant and product.available -%}
+        {%- form 'product', product, class: 'cc-card__form' -%}
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+          <button type="submit" class="cc-btn cc-btn--block">Add to cart</button>
+        {%- endform -%}
+      {%- elsif product.available -%}
+        <a href="{{ product.url }}" class="cc-btn cc-btn--block cc-btn--outline">Choose options</a>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+</div>

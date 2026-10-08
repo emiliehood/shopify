@@ -1,0 +1,164 @@
+{
+  "sections": {
+    "hero": {
+      "type": "cc-collection-hero",
+      "blocks": {
+        "pill-all": { "type": "pill", "settings": { "label": "All", "link": "/collections/all" } },
+        "pill-face": { "type": "pill", "settings": { "label": "Category A", "link": "/collections/category-a" } },
+        "pill-body": { "type": "pill", "settings": { "label": "Category B", "link": "/collections/category-b" } },
+        "pill-sets": { "type": "pill", "settings": { "label": "Bundles", "link": "/collections/bundles" } }
+      },
+      "block_order": ["pill-all", "pill-face", "pill-body", "pill-sets"],
+      "settings": {
+        "eyebrow": "",
+        "heading": "",
+        "intro": "",
+        "align": "left",
+        "show_count": true,
+        "bg": "#ffffff",
+        "fg": "#1f2a2e"
+      }
+    },
+    "grid": {
+      "type": "cc-product-grid",
+      "blocks": {
+        "edit-routine": {
+          "type": "editorial",
+          "settings": {
+            "position": 2,
+            "span": "2",
+            "eyebrow": "Guide",
+            "heading": "Start here.",
+            "text": "<p>A quick guide to choosing the right product for you.</p>",
+            "button_label": "See how it works",
+            "link": "",
+            "style": "overlay",
+            "card_bg": "#1f2a2e",
+            "card_fg": "#ffffff"
+          }
+        },
+        "edit-quiz": {
+          "type": "editorial",
+          "settings": {
+            "position": 6,
+            "span": "1",
+            "eyebrow": "Not sure where to start?",
+            "heading": "Find your match in 60 seconds",
+            "text": "<p>Answer a few quick questions and we will match you with the right product.</p>",
+            "button_label": "Take the quiz",
+            "link": "",
+            "style": "solid",
+            "card_bg": "#1f2a2e",
+            "card_fg": "#ffffff"
+          }
+        }
+      },
+      "block_order": ["edit-routine", "edit-quiz"],
+      "settings": {
+        "heading": "",
+        "per_page": 24,
+        "cols_desktop": 4,
+        "cols_mobile": 2,
+        "show_badge": true,
+        "show_hover_image": true,
+        "show_quick_add": true,
+        "bg": "#ffffff",
+        "fg": "#1f2a2e"
+      }
+    },
+    "trio": {
+      "type": "cc-image-trio",
+      "blocks": {
+        "img-1": { "type": "image", "settings": { "caption": "" } },
+        "img-2": { "type": "image", "settings": { "caption": "" } },
+        "img-3": { "type": "image", "settings": { "caption": "" } }
+      },
+      "block_order": ["img-1", "img-2", "img-3"],
+      "settings": {
+        "heading": "Made for everyday use.",
+        "text": "<p>Thoughtfully designed products that fit into the way you already live.</p>",
+        "button_label": "",
+        "link": "",
+        "align": "center",
+        "bg": "#f4f6f8",
+        "fg": "#1f2a2e"
+      }
+    },
+    "compare": {
+      "type": "cc-comparison-table",
+      "blocks": {
+        "col-1": { "type": "product", "settings": { "row_1": "", "row_2": "", "row_3": "", "row_4": "", "row_5": "" } },
+        "col-2": { "type": "product", "settings": { "row_1": "", "row_2": "", "row_3": "", "row_4": "", "row_5": "" } },
+        "col-3": { "type": "product", "settings": { "row_1": "", "row_2": "", "row_3": "", "row_4": "", "row_5": "" } }
+      },
+      "block_order": ["col-1", "col-2", "col-3"],
+      "settings": {
+        "heading": "Find your fit",
+        "subheading": "Compare products side by side.",
+        "show_price": true,
+        "cta_label": "Shop now",
+        "row_1_label": "Best for",
+        "row_2_label": "Ideal for",
+        "row_3_label": "Key features",
+        "row_4_label": "When to use",
+        "row_5_label": "Size",
+        "row_6_label": "",
+        "bg": "#ffffff",
+        "fg": "#1f2a2e"
+      }
+    },
+    "cards": {
+      "type": "cc-content-cards",
+      "settings": {
+        "heading": "Guides and how-tos",
+        "link_label": "Read the journal",
+        "link": "/blogs/news",
+        "article_count": 4,
+        "bg": "#ffffff",
+        "fg": "#1f2a2e"
+      }
+    },
+    "faq": {
+      "type": "cc-faq",
+      "blocks": {
+        "q1": {
+          "type": "question",
+          "settings": {
+            "question": "Which product should I start with?",
+            "answer": "<p>Start with our bestseller. It covers what most customers need, and you can add to it later.</p>"
+          }
+        },
+        "q2": {
+          "type": "question",
+          "settings": {
+            "question": "How do I choose between products?",
+            "answer": "<p>Use the comparison table above to see the differences at a glance, or contact our team for a recommendation.</p>"
+          }
+        },
+        "q3": {
+          "type": "question",
+          "settings": {
+            "question": "How long does shipping take?",
+            "answer": "<p>Most orders ship within 1 to 2 business days.</p>"
+          }
+        },
+        "q4": {
+          "type": "question",
+          "settings": {
+            "question": "What if it is not right for me?",
+            "answer": "<p>Reach out to our team and we will help you find the right fit. See our returns policy for details.</p>"
+          }
+        }
+      },
+      "block_order": ["q1", "q2", "q3", "q4"],
+      "settings": {
+        "heading": "Frequently asked questions",
+        "open_first": false,
+        "schema": true,
+        "bg": "#f4f6f8",
+        "fg": "#1f2a2e"
+      }
+    }
+  },
+  "order": ["hero", "grid", "trio", "compare", "cards", "faq"]
+}

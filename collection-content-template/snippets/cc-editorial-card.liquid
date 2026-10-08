@@ -1,0 +1,35 @@
+{%- comment -%} Collection content editorial card for the product grid. Param: block {%- endcomment -%}
+{%- liquid
+  assign s = block.settings
+  assign tag = 'div'
+  if s.link != blank
+    assign tag = 'a'
+  endif
+-%}
+<{{ tag }}{% if s.link != blank %} href="{{ s.link }}"{% endif %}
+  class="cc-edit cc-edit--{{ s.style }}"
+  style="--cc-card-bg: {{ s.card_bg }}; --cc-card-fg: {{ s.card_fg }};">
+  {%- if s.style != 'solid' -%}
+    <div class="cc-edit__media">
+      {%- if s.image != blank -%}
+        {{ s.image | image_url: width: 1200 | image_tag:
+          loading: 'lazy',
+          sizes: '(min-width: 990px) 50vw, 100vw',
+          widths: '450, 600, 900, 1200',
+          class: 'cc-edit__img',
+          alt: s.image.alt | default: s.heading
+        }}
+      {%- else -%}
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'cc-edit__img cc-placeholder' }}
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+  <div class="cc-edit__content">
+    {%- if s.eyebrow != blank -%}<p class="cc-eyebrow">{{ s.eyebrow }}</p>{%- endif -%}
+    {%- if s.heading != blank -%}<h3 class="cc-edit__heading">{{ s.heading }}</h3>{%- endif -%}
+    {%- if s.text != blank -%}<div class="cc-edit__text cc-rte">{{ s.text }}</div>{%- endif -%}
+    {%- if s.button_label != blank and s.link != blank -%}
+      <span class="cc-edit__cta">{{ s.button_label }} <span aria-hidden="true">→</span></span>
+    {%- endif -%}
+  </div>
+</{{ tag }}>

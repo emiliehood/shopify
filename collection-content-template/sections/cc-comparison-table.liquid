@@ -1,0 +1,117 @@
+{%- comment -%}
+  Collection content: Product comparison table.
+  Row labels are set on the section; each product block fills in its values.
+{%- endcomment -%}
+{%- liquid
+  assign row_ids = 'row_1,row_2,row_3,row_4,row_5,row_6' | split: ','
+-%}
+<div class="cc-compare cc-scope" style="--cc-bg: {{ section.settings.bg }}; --cc-fg: {{ section.settings.fg }};">
+  <div class="cc-container">
+    {%- if section.settings.heading != blank -%}<h2 class="cc-h2 cc-center">{{ section.settings.heading }}</h2>{%- endif -%}
+    {%- if section.settings.subheading != blank -%}<p class="cc-lede cc-center">{{ section.settings.subheading }}</p>{%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="cc-compare__scroll" tabindex="0" role="region" aria-label="{{ section.settings.heading | default: 'Product comparison' | escape }}">
+        <table class="cc-compare__table">
+          <caption class="cc-visually-hidden">{{ section.settings.heading | default: 'Product comparison' }}</caption>
+          <thead>
+            <tr>
+              <td></td>
+              {%- for block in section.blocks -%}
+                {%- assign p = block.settings.product -%}
+                <th scope="col" {{ block.shopify_attributes }}>
+                  <a href="{{ p.url | default: '#' }}" class="cc-compare__product">
+                    {%- assign img = block.settings.image | default: p.featured_media -%}
+                    {%- if img -%}
+                      {{ img | image_url: width: 400 | image_tag: loading: 'lazy', class: 'cc-compare__img', alt: '' }}
+                    {%- else -%}
+                      {{ 'product-2' | placeholder_svg_tag: 'cc-compare__img cc-placeholder' }}
+                    {%- endif -%}
+                    <span class="cc-compare__name">{{ block.settings.label | default: p.title | default: 'Choose a product' }}</span>
+                  </a>
+                </th>
+              {%- endfor -%}
+            </tr>
+          </thead>
+          <tbody>
+            {%- if section.settings.show_price -%}
+              <tr>
+                <th scope="row">Price</th>
+                {%- for block in section.blocks -%}
+                  <td>{% if block.settings.product %}{{ block.settings.product.price | money }}{% else %}–{% endif %}</td>
+                {%- endfor -%}
+              </tr>
+            {%- endif -%}
+            {%- for row_id in row_ids -%}
+              {%- assign label_key = row_id | append: '_label' -%}
+              {%- assign row_label = section.settings[label_key] -%}
+              {%- if row_label != blank -%}
+                <tr>
+                  <th scope="row">{{ row_label }}</th>
+                  {%- for block in section.blocks -%}
+                    <td>{{ block.settings[row_id] | default: '–' }}</td>
+                  {%- endfor -%}
+                </tr>
+              {%- endif -%}
+            {%- endfor -%}
+            <tr class="cc-compare__cta-row">
+              <td></td>
+              {%- for block in section.blocks -%}
+                <td>
+                  {%- if block.settings.product -%}
+                    <a href="{{ block.settings.product.url }}" class="cc-btn cc-btn--outline cc-btn--small">{{ section.settings.cta_label }}</a>
+                  {%- endif -%}
+                </td>
+              {%- endfor -%}
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% render 'cc-styles' %}
+
+{% schema %}
+{
+  "name": "Comparison table",
+  "tag": "section",
+  "class": "cc-section",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Find your fit" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Compare products side by side." },
+    { "type": "checkbox", "id": "show_price", "label": "Show price row", "default": true },
+    { "type": "text", "id": "cta_label", "label": "Button label", "default": "Shop now" },
+    { "type": "header", "content": "Row labels" },
+    { "type": "paragraph", "content": "Leave a label blank to hide that row." },
+    { "type": "text", "id": "row_1_label", "label": "Row 1", "default": "Best for" },
+    { "type": "text", "id": "row_2_label", "label": "Row 2", "default": "Ideal for" },
+    { "type": "text", "id": "row_3_label", "label": "Row 3", "default": "Key features" },
+    { "type": "text", "id": "row_4_label", "label": "Row 4", "default": "When to use" },
+    { "type": "text", "id": "row_5_label", "label": "Row 5", "default": "Size" },
+    { "type": "text", "id": "row_6_label", "label": "Row 6" },
+    { "type": "color", "id": "bg", "label": "Background", "default": "#ffffff" },
+    { "type": "color", "id": "fg", "label": "Text", "default": "#1f2a2e" }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product column",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Product" },
+        { "type": "text", "id": "label", "label": "Column title override" },
+        { "type": "image_picker", "id": "image", "label": "Image override" },
+        { "type": "text", "id": "row_1", "label": "Row 1 value" },
+        { "type": "text", "id": "row_2", "label": "Row 2 value" },
+        { "type": "text", "id": "row_3", "label": "Row 3 value" },
+        { "type": "text", "id": "row_4", "label": "Row 4 value" },
+        { "type": "text", "id": "row_5", "label": "Row 5 value" },
+        { "type": "text", "id": "row_6", "label": "Row 6 value" }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [ { "name": "Comparison table", "blocks": [ { "type": "product" }, { "type": "product" }, { "type": "product" } ] } ]
+}
+{% endschema %}
